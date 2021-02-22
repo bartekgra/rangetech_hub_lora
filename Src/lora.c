@@ -123,7 +123,7 @@ static void calibration_module(void){
 				time_out_msg = 0;
 				retransmission_msg = 0;
 			}else{
-				if(time_out_msg++ == 3){
+				if(time_out_msg++ == 5){
 					time_out_msg = 0;
 					if(retransmission_msg++ == 3){
 						retransmission_msg = 0;
@@ -158,7 +158,7 @@ static void calibration_module(void){
 				time_out_msg = 0;
 				retransmission_msg = 0;
 			}else{
-				if(time_out_msg++ == 3){
+				if(time_out_msg++ == 5){
 					time_out_msg = 0;
 					if(retransmission_msg++ == 3){
 						retransmission_msg = 0;
