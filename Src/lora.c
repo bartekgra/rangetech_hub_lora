@@ -25,10 +25,11 @@ static const char* config_lora_command[] = {
 };
 
 static uint16_t get_number_of_ready_bytes_rx(void){
-	if(lora_port.buffer_rx_tail > lora_port.buffer_rx_head){
-		return (uint16_t)(LORA_BUFFER_RX_SIZE - lora_port.buffer_rx_tail + lora_port.buffer_rx_head);
-	} else if(lora_port.buffer_rx_tail < lora_port.buffer_rx_head){
-		return (uint16_t)(lora_port.buffer_rx_head - lora_port.buffer_rx_tail);
+	uint8_t tmp_rx_head = lora_port.buffer_rx_head;
+	if(lora_port.buffer_rx_tail > tmp_rx_head){
+		return (uint16_t)(LORA_BUFFER_RX_SIZE - lora_port.buffer_rx_tail + tmp_rx_head);
+	} else if(lora_port.buffer_rx_tail < tmp_rx_head){
+		return (uint16_t)(tmp_rx_head - lora_port.buffer_rx_tail);
 	} else {
 		return 0;
 	}

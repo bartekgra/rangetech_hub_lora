@@ -9,10 +9,11 @@
 #include "rs485.h"
 
 static uint16_t get_number_of_ready_bytes_rx(void){
-	if(rs485_port.buffer_rx_tail > rs485_port.buffer_rx_head){
-		return (uint16_t)(RS485_BUFFER_RX_SIZE - rs485_port.buffer_rx_tail + rs485_port.buffer_rx_head);
-	} else if(rs485_port.buffer_rx_tail < rs485_port.buffer_rx_head){
-		return (uint16_t)(rs485_port.buffer_rx_head - rs485_port.buffer_rx_tail);
+	uint8_t tmp_rx_head = rs485_port.buffer_rx_head;
+	if(rs485_port.buffer_rx_tail > tmp_rx_head){
+		return (uint16_t)(RS485_BUFFER_RX_SIZE - rs485_port.buffer_rx_tail + tmp_rx_head);
+	} else if(rs485_port.buffer_rx_tail < tmp_rx_head){
+		return (uint16_t)(tmp_rx_head - rs485_port.buffer_rx_tail);
 	} else {
 		return 0;
 	}
