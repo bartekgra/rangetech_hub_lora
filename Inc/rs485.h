@@ -25,6 +25,8 @@ struct{
 
 	uint8_t buffer_tx[RS485_BUFFER_TX_SIZE];
 	uint16_t buffer_tx_head;
+
+	uint8_t receiveItFlag;
 }rs485_port;
 
 

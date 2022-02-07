@@ -42,6 +42,12 @@ void loop_rs485(void){
 		HAL_UART_Transmit_IT(&RS485_UART_PERIPH, rs485_port.buffer_tx, rs485_port.buffer_tx_head);
 		rs485_port.buffer_tx_head = 0;
 	}
+
+	if(rs485_port.receiveItFlag){
+		if(HAL_UART_Receive_IT(&RS485_UART_PERIPH, &rs485_port.data_rx, 1) == HAL_OK){
+			rs485_port.receiveItFlag = 0;
+		}
+	}
 }
 
 void receive_byte_rs485(void){
@@ -50,5 +56,8 @@ void receive_byte_rs485(void){
 	if(rs485_port.buffer_rx_head >= RS485_BUFFER_RX_SIZE){
 		rs485_port.buffer_rx_head = 0;
 	}
-	HAL_UART_Receive_IT(&RS485_UART_PERIPH, &rs485_port.data_rx, 1);
+
+	if(HAL_UART_Receive_IT(&RS485_UART_PERIPH, &rs485_port.data_rx, 1) == HAL_BUSY){
+		rs485_port.receiveItFlag = 1;
+	}
 }

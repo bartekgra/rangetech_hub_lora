@@ -33,6 +33,8 @@ struct{
 	uint16_t buffer_tx_head;
 
 	uint8_t configured_flag;
+
+	uint8_t receiveItFlag;
 }lora_port;
 
 

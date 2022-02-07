@@ -218,6 +218,13 @@ void loop_lora(void){
 
 			lora_port.buffer_tx_head = 0;
 		}
+
+		if(lora_port.receiveItFlag){
+			if(HAL_UART_Receive_IT(&LORA_UART_PERIPH, &lora_port.data_rx, 1) == HAL_OK){
+				lora_port.receiveItFlag = 0;
+			}
+		}
+
 	}else{
 		calibration_module();
 	}
@@ -242,9 +249,13 @@ void receive_byte_lora(void){
 	if(lora_port.buffer_rx_head >= LORA_BUFFER_RX_SIZE){
 		lora_port.buffer_rx_head = 0;
 	}
+
 	if(lora_port.configured_flag){
 		active_led(&led_rx);
 	}
-	HAL_UART_Receive_IT(&LORA_UART_PERIPH, &lora_port.data_rx, 1);
+
+	if(HAL_UART_Receive_IT(&LORA_UART_PERIPH, &lora_port.data_rx, 1) == HAL_BUSY){
+		lora_port.receiveItFlag = 1;
+	}
 }
 
