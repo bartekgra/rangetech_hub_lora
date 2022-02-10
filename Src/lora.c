@@ -25,7 +25,7 @@ static const char* config_lora_command[] = {
 };
 
 static uint16_t get_number_of_ready_bytes_rx(void){
-	uint8_t tmp_rx_head = lora_port.buffer_rx_head;
+	uint16_t tmp_rx_head = lora_port.buffer_rx_head;
 	if(lora_port.buffer_rx_tail > tmp_rx_head){
 		return (uint16_t)(LORA_BUFFER_RX_SIZE - lora_port.buffer_rx_tail + tmp_rx_head);
 	} else if(lora_port.buffer_rx_tail < tmp_rx_head){
@@ -73,7 +73,7 @@ static uint8_t get_config_response_ok(void){
 }
 
 static void set_config_command_to_buffer_tx(char* table){
-	uint8_t iter = 0;
+	uint16_t iter = 0;
 	while(table[iter] != 0){
 		lora_port.buffer_tx[iter] = table[iter];
 		iter++;
